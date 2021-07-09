@@ -1,4 +1,9 @@
 # Config map
+Build and push the image first
+
+    mvn compile jib:build
+    
+    
 
 Controller
 
@@ -32,7 +37,7 @@ Now put the property to config_map.yaml
     
     kubectl create deployment springboot-k8s-demo --image=haodeng/springboot-with-k8s:latest --dry-run='client' --output='yaml' > deployment.yaml
 
-Add config to the deployment.yaml env under containers
+Add env vars to the deployment.yaml under containers
 
     ...
     spec:
