@@ -4,7 +4,6 @@ Build and push the image first
     mvn compile jib:build
     
     
-
 Controller
 
     @Value("${demo_value1}")
@@ -32,18 +31,18 @@ Now put the property to config_map.yaml
 
     kubectl apply -f config_map.yaml
     
-    kubectl create service clusterip springboot-k8s-demo --tcp=8080:8080 --dry-run=client -o=yaml > service.yaml
+    kubectl create service clusterip config-demo-service --tcp=8080:8080 --dry-run=client -o=yaml > service.yaml
     kubectl apply -f service.yaml
     
-    kubectl create deployment springboot-k8s-demo --image=haodeng/springboot-with-k8s:latest --dry-run='client' --output='yaml' > deployment.yaml
+    kubectl create deployment config-demo-service --image=haodeng/config-demo-service:latest --dry-run='client' --output='yaml' > deployment.yaml
 
 Add env vars to the deployment.yaml under containers
 
     ...
     spec:
           containers:
-          - image: haodeng/springboot-with-k8s:latest
-            name: springboot-with-k8s
+          - image: haodeng/config-demo-service:latest
+            name: config-demo-service
             resources: {}
             env:
               - name: DEMO_VALUE1

@@ -3,8 +3,8 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: springboot-k8s-demo
-  name: springboot-k8s-demo
+    app: config-demo-service
+  name: config-demo-service
 spec:
   ports:
   - name: 8080-8080
@@ -12,7 +12,7 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: springboot-k8s-demo
+    app: config-demo-service
   type: ClusterIP
 status:
   loadBalancer: {}

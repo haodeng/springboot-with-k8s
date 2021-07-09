@@ -3,23 +3,23 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: springboot-k8s-demo
-  name: springboot-k8s-demo
+    app: config-demo-service
+  name: config-demo-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: springboot-k8s-demo
+      app: config-demo-service
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: springboot-k8s-demo
+        app: config-demo-service
     spec:
       containers:
-      - image: haodeng/springboot-with-k8s:latest
-        name: springboot-with-k8s
+      - image: haodeng/config-demo-service:latest
+        name: config-demo-service
         resources: {}
         env:
           - name: DEMO_VALUE1
