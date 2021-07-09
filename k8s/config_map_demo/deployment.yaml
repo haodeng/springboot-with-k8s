@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: springboot-k8s-demo
+  name: springboot-k8s-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: springboot-k8s-demo
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: springboot-k8s-demo
+    spec:
+      containers:
+      - image: haodeng/springboot-with-k8s:latest
+        name: springboot-with-k8s
+        resources: {}
+        env:
+          - name: DEMO_VALUE1
+            valueFrom:
+              configMapKeyRef:
+                name: demo-config
+                key: demo_value1
+          - name: DEMO_VALUE2
+            valueFrom:
+              configMapKeyRef:
+                name: demo-config
+                key: demo_value2
+status: {}

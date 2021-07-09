@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-config
+data:
+  demo_value1: val1 from k8s config map
+  demo_value2: val2 from k8s config map
