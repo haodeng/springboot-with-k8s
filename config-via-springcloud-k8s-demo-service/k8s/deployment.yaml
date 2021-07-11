@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: config-via-springcloud-k8s-demo-service
+  name: config-via-springcloud-k8s-demo-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-via-springcloud-k8s-demo-service
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: config-via-springcloud-k8s-demo-service
+    spec:
+      serviceAccount: config-via-springcloud-k8s-demo-service
+      containers:
+      - image: haodeng/config-via-springcloud-k8s-demo-service:latest
+        name: config-via-springcloud-k8s-demo-service
+        resources: {}
+        env:
+          - name: DEMO_VALUE1
+            valueFrom:
+              configMapKeyRef:
+                name: reload-demo-config
+                key: demo_value1
+status: {}

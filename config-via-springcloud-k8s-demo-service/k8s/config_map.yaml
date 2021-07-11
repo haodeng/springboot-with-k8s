@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: reload-demo-config
+  labels:
+    spring.cloud.kubernetes.config: "true"
+data:
+  "demo_value1": "val1 from k8s config map"
+  application.properties: |-
+    bean.message=Hello from k8s!
+    bean.greeting=Greeting from k8s!

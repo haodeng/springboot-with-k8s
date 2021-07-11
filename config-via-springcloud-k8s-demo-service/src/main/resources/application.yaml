@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: config-via-springcloud-k8s-demo-service
+  cloud:
+    kubernetes:
+      reload:
+        enabled: true
+        mode: event
+
+management:
+  endpoint:
+    restart:
+      enabled: true
+    health:
+      enabled: true
+    info:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
