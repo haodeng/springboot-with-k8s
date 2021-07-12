@@ -11,6 +11,7 @@
     <modules>
         <module>config-demo-service</module>
         <module>config-via-springcloud-k8s-demo-service</module>
+        <module>service-discovery</module>
     </modules>
 
     <properties>

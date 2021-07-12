@@ -3,6 +3,7 @@ PS: The biggest problem of the approach is when k8s configMap value updated, all
 
 Use "Spring Cloud Kubernetes" to hot reload config map changes.
 
+
 Checkout config-via-springcloud-k8s-demo-service demo
 
 

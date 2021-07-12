@@ -1,0 +1,33 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: orders-service
+spec:
+  selector:
+    app: orders-service
+  ports:
+    - protocol: TCP
+      port: 8080
+      nodePort: 30000
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-service
+spec:
+  selector:
+    matchLabels:
+      app: orders-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: orders-service
+    spec:
+      containers:
+        - name: orders-service
+          image: orders-service
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
