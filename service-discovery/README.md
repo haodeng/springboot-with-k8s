@@ -47,3 +47,35 @@ Deploy
     a browser opens hit http://127.0.0.1:59701/
     [order1, order2, order3]
 The discovery-client-demo calls http://orders-service:8080/orders works
+
+## Demo of hot deploy orders-service
+
+    skaffold dev
+
+Change OrdersController returns more orders
+
+    @GetMapping
+        public String getAll() {
+            return "[order1, order2, order3, order4]";
+        }
+
+Rebuild
+
+    mvn clean install
+    
+Check out the skaffold terminal, it starts to auto build image and deploy to k8s
+
+Verify deploy
+    
+    minikube service discovery-client-demo
+        
+    a browser opens hit http://127.0.0.1:<random_port>/
+    [order1, order2, order3, order4]
+
+Clean up
+
+Ctrl+C skaffold terminal, auto clean up
+
+    ^CCleaning up...
+     - service "orders-service" deleted
+     - deployment.apps "orders-service" deleted
