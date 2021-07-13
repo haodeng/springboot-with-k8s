@@ -91,7 +91,7 @@ For deployment and service, checkout k8s/deployment.yaml and k8s/sservice.yaml
     curl http://localhost:8080/k8s-config-map/val1
     val1 from k8s config map
     
-    curl http://localhost:8080/k8s-config-map/val1
+    curl http://localhost:8080/k8s-config-map/another
     Another from k8s!
 
 Change configMap values to "2.0":
@@ -126,7 +126,7 @@ Test:
     curl http://localhost:8080/k8s-config-map/val1
     val1 from k8s config map
     
-    curl http://localhost:8080/k8s-config-map/val1
+    curl http://localhost:8080/k8s-config-map/another
     Another from k8s!
 
 Only MyConfig.message changed to "Hello 2.0 from k8s!". ConfigurationProperties supports auto refresh.
