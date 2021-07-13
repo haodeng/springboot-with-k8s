@@ -79,3 +79,47 @@ Ctrl+C skaffold terminal, auto clean up
     ^CCleaning up...
      - service "orders-service" deleted
      - deployment.apps "orders-service" deleted
+
+## Intercept the orders-service for fast dev (No hot deploy required)
+Use Telepresence
+
+The purpose is to break the discovery-client-demo's dependency on orders-service in k8s env, by intercepting the orders-service traffic and redirect to local port
+
+Check the services ready for intercept:
+
+    telepresence list
+    orders-service: ready to intercept (traffic-agent not yet installed)
+    discovery-client-demo: ready to intercept (traffic-agent not yet installed)
+    
+
+Intercept orders-service, all traffics to orders-service will redirect to localhost:8080:
+
+    telepresence intercept orders-service --port 8080
+
+Start my local orders-service, eg: from IDE in debug mode, set up break point
+
+Test:
+
+    minikube service discovery-client-demo
+    
+    # This opens the browser and hit http://127.0.0.1:51186/
+    [order1, order2, order3]
+
+The breakpoint should expect working, and we are able to debug the orders-service
+
+Change the Order service code locally:
+
+    @GetMapping
+    public String getAll() {
+        return "[order1, order2, order3, new order4]";
+    }
+
+Restart the orders-service in IDE, or enable live load. Refresh http://127.0.0.1:51186/
+
+    [order1, order2, order3, new order4] 
+
+Change expected, no hot deploy needed. local debug and dev becomes much easier.
+
+Clean up
+
+    telepresence leave orders-service
