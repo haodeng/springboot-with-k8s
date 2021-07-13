@@ -25,6 +25,8 @@ spec:
       labels:
         app: discovery-client-demo
     spec:
+      # reuse service account for configMap demo, so discovery client can access services
+      serviceAccount: config-via-springcloud-k8s-demo-service
       containers:
         - name: discovery-client-demo
           image: discovery-client-demo

@@ -20,14 +20,18 @@ Add @EnableDiscoveryClient
     
 In demo controller, call orders-service:
 
+    @Autowired
+    private DiscoveryClient discoveryClient;
+    
     @GetMapping
     public String getOrders() {
-        String url = "http://orders-service:8080/orders";
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
-        
-        return responseEntity.getBody();
-    }
-k8s itself knows how to access orders-service
+        List<ServiceInstance> ordersServices = discoveryClient.getInstances("orders-service");
+        if (ordersServices != null && !ordersServices.isEmpty()) {
+            ServiceInstance ordersService = ordersServices.get(0);
+            String url = "http://orders-service:" + ordersService.getPort() + "/orders";
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+         ...   
+k8s itself knows how to locate orders-service, port can be find by discoveryClient
 
 Deploy
 
