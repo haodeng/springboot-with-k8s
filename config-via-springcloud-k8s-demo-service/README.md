@@ -70,6 +70,7 @@ configMap
       application.properties: |-
         bean.message=Hello from k8s!
         bean.greeting=Greeting from k8s!
+        another.message=Another from k8s!
 
 Security config, checkout k8s/roles_for_access.yaml
 
@@ -89,6 +90,9 @@ For deployment and service, checkout k8s/deployment.yaml and k8s/sservice.yaml
     
     curl http://localhost:8080/k8s-config-map/val1
     val1 from k8s config map
+    
+    curl http://localhost:8080/k8s-config-map/val1
+    Another from k8s!
 
 Change configMap values to "2.0":
 
@@ -103,6 +107,7 @@ Change configMap values to "2.0":
           application.properties: |-
             bean.message=Hello 2.0 from k8s!
             bean.greeting=Greeting 2.0 from k8s!
+            another.message=Another 2.0 from k8s!
 
 The pod log should print:
     
@@ -120,9 +125,14 @@ Test:
         
     curl http://localhost:8080/k8s-config-map/val1
     val1 from k8s config map
+    
+    curl http://localhost:8080/k8s-config-map/val1
+    Another from k8s!
 
 Only MyConfig.message changed to "Hello 2.0 from k8s!". ConfigurationProperties supports auto refresh.
 
 "val1 from k8s config map" is injected via env in deployment.yaml, env properties seems not able to auto refresh yet.
+
+"Another from k8s!" loaded via application.properties, but not via ConfigurationProperties, not able to refresh as well.
 
 

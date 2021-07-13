@@ -9,3 +9,4 @@ data:
   application.properties: |-
     bean.message=Hello from k8s!
     bean.greeting=Greeting from k8s!
+    another.message=Another from k8s!

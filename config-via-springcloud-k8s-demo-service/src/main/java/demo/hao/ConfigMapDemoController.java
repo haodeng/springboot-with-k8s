@@ -16,9 +16,17 @@ public class ConfigMapDemoController {
     @Value("${demo_value1: default val1}")
     private String demoValue1;
 
+    @Value("${another.message: default another message}")
+    private String anotherMessage;
+
     @GetMapping("/val1")
     public String getValue1() {
         return demoValue1;
+    }
+
+    @GetMapping("/another")
+    public String getAnotherMessage() {
+        return anotherMessage;
     }
 
     @GetMapping
