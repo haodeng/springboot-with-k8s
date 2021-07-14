@@ -31,8 +31,16 @@ In demo controller, call orders-service:
             String url = "http://orders-service:" + ordersService.getPort() + "/orders";
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
          ...   
-k8s itself knows how to locate orders-service, port can be find by discoveryClient
+k8s itself knows how to locate orders-service, port can be find by discoveryClient. 
+Demo only how discoveryClient get a service instance info, calling orders-service in prod should via a "API gateway".
 
+Get all services registered
+
+    @GetMapping("/services")
+        public List<String> getServices() {
+            return discoveryClient.getServices();
+        }
+        
 Deploy
 
     skaffold run
