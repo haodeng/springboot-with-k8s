@@ -16,6 +16,20 @@ Demo get user/pass from secret, connect to mysql and get db time
       creationTimestamp: null
       name: mysql-demo-secret
 
+secret will be injected to deployment env:
+
+           env:
+            - name: MYSQL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-demo-secret
+                  key: mysql.username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-demo-secret
+                  key: mysql.password
+                  
 Deploy
 
     skaffod dev
