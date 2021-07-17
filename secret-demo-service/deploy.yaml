@@ -1,0 +1,53 @@
+apiVersion: v1
+data:
+  mysql.password: dGVzdA==
+  mysql.username: dGVzdA==
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: mysql-demo-secret
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: secret-demo-service
+spec:
+  selector:
+    app: secret-demo-service
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secret-demo-service
+spec:
+  selector:
+    matchLabels:
+      app: secret-demo-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: secret-demo-service
+    spec:
+      containers:
+        - name: secret-demo-service
+          image: secret-demo-service
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MYSQL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-demo-secret
+                  key: mysql.username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-demo-secret
+                  key: mysql.password
