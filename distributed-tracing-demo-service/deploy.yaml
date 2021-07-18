@@ -1,0 +1,33 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: distributed-tracing-demo-service
+spec:
+  selector:
+    app: distributed-tracing-demo-service
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: distributed-tracing-demo-service
+spec:
+  selector:
+    matchLabels:
+      app: distributed-tracing-demo-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: distributed-tracing-demo-service
+    spec:
+      containers:
+        - name: distributed-tracing-demo-service
+          image: distributed-tracing-demo-service
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080

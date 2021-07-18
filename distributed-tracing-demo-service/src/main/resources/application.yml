@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: distributed-tracing-demo-service
+  sleuth:
+    sampler:
+      probability: 1
+  zipkin:
+    baseUrl: http://zipkin:9411/
+
+management:
+  endpoints.web.exposure.include: '*'
+  endpoint:
+    health:
+      show-details: always
