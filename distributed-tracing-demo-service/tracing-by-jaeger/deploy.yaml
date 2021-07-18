@@ -1,0 +1,33 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: tracing-by-jaeger
+spec:
+  selector:
+    app: tracing-by-jaeger
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tracing-by-jaeger
+spec:
+  selector:
+    matchLabels:
+      app: tracing-by-jaeger
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tracing-by-jaeger
+    spec:
+      containers:
+        - name: tracing-by-jaeger
+          image: tracing-by-jaeger
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080

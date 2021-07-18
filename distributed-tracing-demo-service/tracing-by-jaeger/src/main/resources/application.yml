@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: tracing-by-jaeger
+
+server:
+  port: 8080
+
+opentracing:
+  jaeger:
+    udp-sender:
+      host: 192.168.1.25
+      port: 6831
+
+management:
+  endpoints.web.exposure.include: '*'
+  endpoint:
+    health:
+      show-details: always

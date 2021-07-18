@@ -19,10 +19,9 @@
 * EFK stack (TBD://)
 
 ## Distributed Tracing
-* zipkin and sleuth
+* By zipkin and sleuth
+* By jeager (recommended)
 
-## fabric8 plugin
-TBD://
 
 # 2. Microservice patterns with k8s
 In general k8s makes life much easier than traditional Microservice setup.
@@ -81,7 +80,7 @@ In general k8s makes life much easier than traditional Microservice setup.
   
 * Distributed Tracing
 
-  We still use Zipkin. 
+  We still use Zipkin or Jaeger. 
   Just need to deploy zipkin to k8s cluster. 
   In application.properties, put spring.zipkin.baseUrl=http://zipkin/, this points to zipkin k8s service
   

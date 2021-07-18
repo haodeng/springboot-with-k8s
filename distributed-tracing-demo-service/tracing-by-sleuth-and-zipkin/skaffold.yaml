@@ -2,7 +2,7 @@ apiVersion: skaffold/v1
 kind: Config
 build:
   artifacts:
-    - image: distributed-tracing-demo-service
+    - image: tracing-by-sleuth-and-zipkin
       docker:
         dockerfile: Dockerfile
   local: {}

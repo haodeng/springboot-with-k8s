@@ -1,10 +1,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: distributed-tracing-demo-service
+  name: tracing-by-sleuth-and-zipkin
 spec:
   selector:
-    app: distributed-tracing-demo-service
+    app: tracing-by-sleuth-and-zipkin
   ports:
     - protocol: TCP
       port: 8080
@@ -14,20 +14,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: distributed-tracing-demo-service
+  name: tracing-by-sleuth-and-zipkin
 spec:
   selector:
     matchLabels:
-      app: distributed-tracing-demo-service
+      app: tracing-by-sleuth-and-zipkin
   replicas: 1
   template:
     metadata:
       labels:
-        app: distributed-tracing-demo-service
+        app: tracing-by-sleuth-and-zipkin
     spec:
       containers:
-        - name: distributed-tracing-demo-service
-          image: distributed-tracing-demo-service
+        - name: tracing-by-sleuth-and-zipkin
+          image: tracing-by-sleuth-and-zipkin
           imagePullPolicy: Never
           ports:
             - containerPort: 8080
