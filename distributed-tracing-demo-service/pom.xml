@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>tracing-by-sleuth-and-zipkin</module>
+        <module>tracing-by-jaeger</module>
     </modules>
 
 

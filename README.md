@@ -22,6 +22,8 @@
 * By zipkin and sleuth
 * By jeager (recommended)
 
+## Monitor (by prometheus)
+Check out: https://github.com/haodeng/techy-notes/blob/master/k8s/install-prometheus.md
 
 # 2. Microservice patterns with k8s
 In general k8s makes life much easier than traditional Microservice setup.
