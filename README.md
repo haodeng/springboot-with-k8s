@@ -12,6 +12,7 @@
 * hot deploy to k8s via skaffold dev mode (checkout service-discovery)
 * Intercept the orders-service for local debug and fast dev. No hot deploy required even (checkout service-discovery)
 * Use IDE remote debug a pod
+* Use tilt to quick dev & deploy
 
 ## Ingress
 * Ingress demo

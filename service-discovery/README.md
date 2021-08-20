@@ -161,3 +161,33 @@ Port forward:
     kubectl port-forward podname 8080:8080
 
 IDE remote debug connect to port 5005, then curl http://localhost:8080/orders, break point should be hit
+
+## Use tilt to quick dev&deploy
+Create a Tiltfile:
+
+    # Records the current time, then kicks off a server update.
+    # Normally, you would let Tilt do deploys automatically, but this
+    # shows you how to set up a custom workflow that measures it.
+    local_resource(
+        'deploy',
+        'python record-start-time.py',
+    )
+
+    local_resource(
+        'compile',
+        'mvn clean package',
+        deps=['src', 'pom.xml'],
+        resource_deps = ['deploy']
+    )
+
+    docker_build('orders-service', '.', dockerfile='./Dockerfile')
+    k8s_yaml('deploy.yaml')
+    k8s_resource('orders-service', port_forwards=8080, resource_deps=['deploy','compile'])
+    
+Deploy
+
+    tilt up
+    
+This will open a browser where you have overview of all pods.
+
+The cool thing is amy changes to the code will auto deploy to k8s cluster.
