@@ -135,3 +135,29 @@ Change expected, no hot deploy needed. local debug and dev becomes much easier.
 Clean up
 
     telepresence leave orders-service
+    
+
+## Remote debug a pod
+In Dockerfile,
+
+    ENTRYPOINT exec java -agentlib:jdwp=transport=dt_socket,address=5005,server=y,suspend=n -jar /app.jar
+
+In deploy.yaml, add a containerPort 5005:
+
+    spec:
+      containers:
+        - name: orders-service
+          image: orders-service
+          imagePullPolicy: Never
+          ports:
+            # Only add when remote debug requires
+            - containerPort: 5005
+              name: "jvm-debug"
+            - containerPort: 8080
+            
+Port forward:
+    
+    kubectl port-forward podname 5005:5005
+    kubectl port-forward podname 8080:8080
+
+IDE remote debug connect to port 5005, then curl http://localhost:8080/orders, break point should be hit

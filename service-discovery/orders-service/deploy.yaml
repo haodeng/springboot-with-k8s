@@ -30,4 +30,7 @@ spec:
           image: orders-service
           imagePullPolicy: Never
           ports:
+            # Only add when remote debug requires
+            - containerPort: 5005
+              name: "jvm-debug"
             - containerPort: 8080
