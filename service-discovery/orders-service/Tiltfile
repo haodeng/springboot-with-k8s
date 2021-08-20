@@ -1,3 +1,5 @@
+load('ext://restart_process', 'docker_build_with_restart')
+
 # Records the current time, then kicks off a server update.
 # Normally, you would let Tilt do deploys automatically, but this
 # shows you how to set up a custom workflow that measures it.
@@ -8,11 +10,26 @@ local_resource(
 
 local_resource(
     'compile',
-    'mvn clean package',
+    'mvn clean package && ' +
+    'rm -rf target/jar-staging && ' +
+    'unzip -o target/orders-service-1.0-SNAPSHOT.jar -d target/jar-staging && ' +
+    'rsync --delete --inplace --checksum -r target/jar-staging/ target/jar',
     deps=['src', 'pom.xml'],
     resource_deps = ['deploy']
 )
 
-docker_build('orders-service', '.', dockerfile='./Dockerfile')
+docker_build_with_restart(
+  'orders-service',
+  './target/jar',
+  entrypoint=['java', '-noverify', '-cp', '.:./lib/*', 'demo.hao.OrdersServiceApplication'],
+  dockerfile='./Dockerfile_tilt',
+  live_update=[
+    sync('./target/jar/BOOT-INF/lib', '/app/lib'),
+    sync('./target/jar/META-INF', '/app/META-INF'),
+    sync('./target/jar/BOOT-INF/classes', '/app'),
+  ],
+)
+
+
 k8s_yaml('deploy.yaml')
 k8s_resource('orders-service', port_forwards=8080, resource_deps=['deploy','compile'])

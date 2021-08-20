@@ -191,3 +191,17 @@ Deploy
 This will open a browser where you have overview of all pods.
 
 The cool thing is amy changes to the code will auto deploy to k8s cluster.
+
+It's also possible to enable live load, auto deploy is even faster.
+
+    docker_build_with_restart(
+      'orders-service',
+      './target/jar',
+      entrypoint=['java', '-noverify', '-cp', '.:./lib/*', 'demo.hao.OrdersServiceApplication'],
+      dockerfile='./Dockerfile_tilt',
+      live_update=[
+        sync('./target/jar/BOOT-INF/lib', '/app/lib'),
+        sync('./target/jar/META-INF', '/app/META-INF'),
+        sync('./target/jar/BOOT-INF/classes', '/app'),
+      ],
+    )
